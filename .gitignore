@@ -1,0 +1,31 @@
+# Your sessions and your scores. Excluded by default so that cloning or forking
+# this framework never publishes anyone's learning data.
+#
+# Want your own history versioned? Keep it in a PRIVATE fork and delete these
+# two lines. Note that git history is permanent — anything committed survives a
+# later `git rm`, so decide before the first commit, not after.
+learn/
+log/
+
+# Installation-specific overrides the skill reads from the run directory (see
+# skills/teach/STORAGE.md). Root-anchored so the template copy stays tracked.
+/teach-config.md
+
+# Local Claude Code state (install.sh writes symlinks into ~/.claude, not here)
+.claude/
+
+# Obsidian's own state, if this directory is ever opened as a vault
+.obsidian/
+.trash/
+
+# Machine-local noise and secrets
+*.log
+.env
+.env.*
+*.local.*
+*.orig
+*.rej
+*~
+.*.sw?
+.DS_Store
+Thumbs.db

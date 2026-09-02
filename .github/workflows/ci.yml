@@ -1,0 +1,22 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - name: syntax
+        run: bash -n install.sh
+      - name: shellcheck
+        run: shellcheck -s bash install.sh
+      - name: manifests
+        run: |
+          jq -e '.name=="brain-gym" and (.author|has("email")|not)' .claude-plugin/plugin.json
+          jq -e '.plugins[0].source=="./"' .claude-plugin/marketplace.json
+      - name: ignore rules hold
+        run: for p in learn/x.md log/x.md teach-config.md .obsidian/workspace.json .env; do git check-ignore -q "$p"; done

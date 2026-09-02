@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "brain-gym",
+  "description": "A tutor that measures what you know before it teaches. Probes with graded, confidence-scored quizzes, plans a dependency graph from your measured edge to the goal, then teaches one reasoning step at a time. Never leads with the answer. Every rule traces to a citation.",
+  "version": "0.2.0",
+  "author": {
+    "name": "christian93kg",
+    "url": "https://github.com/christian93kg/brain-gym"
+  },
+  "homepage": "https://github.com/christian93kg/brain-gym",
+  "repository": "https://github.com/christian93kg/brain-gym",
+  "license": "MIT",
+  "keywords": [
+    "learning",
+    "teaching",
+    "tutor",
+    "spaced-repetition",
+    "calibration",
+    "education"
+  ]
+}

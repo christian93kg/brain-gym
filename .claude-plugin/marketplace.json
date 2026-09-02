@@ -1,0 +1,15 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "brain-gym",
+  "description": "The /teach tutor and its fact-check agent: a Claude Code skill that measures what you know before it teaches.",
+  "owner": {
+    "name": "christian93kg"
+  },
+  "plugins": [
+    {
+      "name": "brain-gym",
+      "source": "./",
+      "description": "A tutor that measures what you know before it teaches. Probes with graded, confidence-scored quizzes, plans a dependency graph from your measured edge to the goal, then teaches one reasoning step at a time."
+    }
+  ]
+}
