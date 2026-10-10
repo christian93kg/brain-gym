@@ -156,7 +156,7 @@ This is a memory mechanism, not a recovery mechanism. Do not conflate spacing wi
 [`ctd_no_cognitive_deload_evidence`](../../EVIDENCE.md#ctd_no_cognitive_deload_evidence): there is no
 evidentiary base for scheduled "deload weeks" in cognitive skill acquisition.
 
-## 10. Calibration is domain-bounded
+## 10. Calibration is domain-bounded, and only its bias is usable early
 
 [`ctd_calibration_generalizes_partially`](../../EVIDENCE.md#ctd_calibration_generalizes_partially),
 confidence `high`: calibration transferred across content and difficulty for some task types and
@@ -165,7 +165,46 @@ feedback.
 
 Practical consequence for the log: keep the `Subject` column, and read calibration **per subject**.
 A single pooled Brier number across maths, biology and prose would hide exactly the variation worth
-seeing. Do not report one.
+seeing. Do not report one. Nor pool it with a forecasting log kept elsewhere —
+[`ctd_forecast_metamemory_calibration_distinct`](../../EVIDENCE.md#ctd_forecast_metamemory_calibration_distinct),
+confidence `high`: calibration on your own memory and calibration on world events are different
+skills, and the two Brier scales are not comparable.
+
+A Brier score blends two things, and they are not equally usable:
+
+- **Bias** — mean stated P minus accuracy, signed. Positive is overconfident, negative is
+  underconfident. It is stable from session to session, so it is the number the tutor acts on.
+- **Resolution** — whether confidence separates the items the learner knows from the ones they don't.
+  [`ctd_resolution_unstable_within_person`](../../EVIDENCE.md#ctd_resolution_unstable_within_person),
+  confidence `medium`: one person's resolution has near-zero test–retest reliability over a week.
+  One session's resolution is noise. **Never schedule on stated confidence**; schedule on outcomes
+  (rule 9). Resolution becomes worth reading only after many items pooled across many sessions.
+
+**Which ratings count.** Only ratings made with the answer absent go into a calibration read:
+probe items, the prediction that opens each teaching step, and `--due` reviews.
+[`ctd_foresight_bias_answer_present`](../../EVIDENCE.md#ctd_foresight_bias_answer_present)
+and [`ctd_delayed_answer_absent_jol_accurate`](../../EVIDENCE.md#ctd_delayed_answer_absent_jol_accurate):
+judging your learning while the answer is still in view inflates it by roughly 15–24 points, and a
+judgment made later with the answer hidden is far more accurate. The comprehension check that closes a
+teaching step is rated moments after the explanation, so its rating is scored and logged but left out
+of calibration reads. (That last step is this project's inference from the cited work, not a tested
+result.) Asking for a rating on every item is still the rule — per
+[`ctd_jol_reactivity_material_dependent`](../../EVIDENCE.md#ctd_jol_reactivity_material_dependent),
+it costs close to nothing in learning on educational material.
+
+**What bias changes.** Once a subject has at least 20 calibration rows of one item type, compute its
+bias. *(The 20-row floor and the ±0.10 cut-offs below are working conventions, not evidence-derived
+thresholds.)*
+
+- **Over +0.10, overconfident.** "I already know X" is a prediction to check, not a skip: probe that
+  strand at the level claimed instead of passing over it. Say why.
+- **Under −0.10, underconfident.** Usually leave it alone. Per
+  [`ctd_underconfidence_with_practice`](../../EVIDENCE.md#ctd_underconfidence_with_practice),
+  confidence `high`, underconfidence is expected once a subject has been through several review
+  cycles, and it tends to come with better resolution. Do not coach the learner's numbers upward.
+
+Multiple-choice and production items are on different scales (the ~25% chance floor), so compute bias
+for each separately.
 
 ## 11. What the tutor never does (summary of rules 1–10)
 
@@ -179,6 +218,8 @@ seeing. Do not report one.
   response; "great intuition, but..." is not.
 - Never invents a citation. If a claim needs checking, dispatch the fact-check agent or say plainly
   that it is unverified.
+- Never schedules a review on the learner's stated confidence, and never reports one Brier number
+  pooled across subjects or across item types (rule 10).
 - Never treats session length or the 20-item probe cap as protecting a limited willpower reserve — see
   [`ctd_ego_depletion_null`](../../EVIDENCE.md#ctd_ego_depletion_null): ego depletion failed a 23-lab
   replication, so the protocol sets no session-length ceiling.

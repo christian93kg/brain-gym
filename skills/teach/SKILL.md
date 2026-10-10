@@ -75,7 +75,11 @@ reach, so you have to find the edge on every strand the topic depends on.
 **Before asking anything:**
 
 1. Read `learn/index.md` (create it if absent from `${CLAUDE_SKILL_DIR}/templates/learn-index.md`). Prior sessions in
-   an adjacent subject are free probe data; use them and say you are using them.
+   an adjacent subject are free probe data; use them and say you are using them. If `$LOG` holds
+   at least 20 calibration rows for this subject (PROTOCOL rule 10 says which rows count), compute
+   the subject's bias and tell the learner. If it is overconfident, every `-- I already know` seed
+   still gets one item at the level claimed; the seed sets where the strand starts, not whether it
+   is probed.
 2. Decompose the target topic into its **dependency strands** - the distinct prerequisite threads
    the goal rests on. Write them down. Differential forms, for example, has strands running through
    line integrals, vector calculus, linear algebra, and multivariable notation.
@@ -149,6 +153,7 @@ Rules:
   so `--due` can re-draw it later.
 
 Score every item as `(P - Outcome)^2`, Outcome 1 or 0. Track running accuracy and running Brier.
+Probe items are logged with `Kind` `probe` (see "The teach log").
 
 ### Production items, for generative material
 
@@ -227,12 +232,14 @@ similarities-first, in the four-step order, and never lead with what does not ma
    answer* - the belief behind it, not the correct answer. Check prior sessions for a miss of the
    same shape. This step is the intervention (PROTOCOL rule 5).
 2. Append the session summary: running Brier, accuracy, nodes covered, the worst miss and its
-   diagnosis.
-3. Append all scored rows to `$LOG`, batched into one write.
+   diagnosis, and the subject's bias once it has 20 calibration rows (PROTOCOL rule 10) - signed,
+   per item type, never pooled.
+3. Append all scored rows to `$LOG`, batched into one write, each with its `Kind`.
 4. Set `phase: done`, set `revisit_on` per PROTOCOL rule 9 from `retention_target`, and bump
    `updated`.
 5. Update the index row in `learn/index.md`.
-6. Tell the learner their Brier and accuracy, and when the revisit is due.
+6. Tell the learner their Brier and accuracy, their subject bias if there is one yet, and when the
+   revisit is due.
 
 ---
 
@@ -276,14 +283,29 @@ the skill's own tags; files that already exist keep their existing frontmatter u
 `$LOG` - append-only, one row per scored item, appended in a batch at session end. Create it from
 `${CLAUDE_SKILL_DIR}/templates/teach-log.md` if it does not exist yet. Never rewrite an existing row.
 
-`| Date | Subject | Session | Item | P | Outcome | Score |`
+`| Date | Subject | Session | Item | Kind | P | Outcome | Score |`
+
+`Kind` is what the row was, and it decides whether the row counts toward calibration (PROTOCOL rule
+10):
+
+| Kind | Row | Calibration read |
+|---|---|---|
+| `probe` | A PROBE item | Yes |
+| `predict` | The prediction that opens a teaching step (TEACH step 1) | Yes |
+| `check` | The comprehension check that closes a teaching step (TEACH step 3) | No - rated moments after the explanation |
+| `review` | A `--due` re-quiz item | Yes |
+| `production` | A production-task forecast | Yes, but on its own scale - never mixed with the multiple-choice kinds |
+
+Rows written before this column existed have no `Kind`; leave them out of calibration reads rather
+than guessing.
 
 `Session` is the note's file stem (`<YYYY-MM-DD>-<topic-slug>`), written as a wikilink
 (`[[<stem>]]`) only on the Obsidian backend; plain text on the plain-files backend.
 
-Read calibration **per subject**, never as one pooled number (PROTOCOL rule 10). Note also that a
-four-option item has a ~25% chance floor, so these Brier scores are not on the same scale as free-form
-forecasting and should not be pooled with any such log you keep elsewhere.
+Read calibration **per subject**, never as one pooled number (PROTOCOL rule 10). Read it as signed
+bias over the calibration rows, not as a raw Brier mean, and never schedule anything on stated
+confidence. Note also that a four-option item has a ~25% chance floor, so these Brier scores are not on
+the same scale as free-form forecasting and should not be pooled with any such log you keep elsewhere.
 
 ## The learn index
 
@@ -303,8 +325,8 @@ Column semantics: `Status` holds the note's `phase` (not a separate value); `Nod
 
 Read `learn/index.md` and find every row whose `revisit_on` is on or before today. If none are due,
 say so and stop. Otherwise offer a short re-quiz drawn from each session's recorded item rows -
-interleaved across subjects when more than one is due. Append the new rows to `$LOG`, reusing the
-original `Session` value, and push each note's `revisit_on` out per PROTOCOL rule 9 using that
+interleaved across subjects when more than one is due. Append the new rows to `$LOG` with `Kind`
+`review`, reusing the original `Session` value, and push each note's `revisit_on` out per PROTOCOL rule 9 using that
 note's own `retention_target`. Bump `updated` and rewrite that session's row in `learn/index.md`. On
 the Obsidian backend, every one of these writes goes through the CLI, as in `STORAGE.md`.
 

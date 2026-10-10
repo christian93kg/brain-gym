@@ -23,6 +23,11 @@ end, not one at a time.
 > mathematics, biology and prose hides exactly the variation worth seeing. Keep the `Subject` column
 > and split on it. — PROTOCOL rule 10
 
+> **Only answer-absent ratings count.** `Kind` marks each row. `probe`, `predict` and `review` rows
+> feed the calibration read; `check` rows are rated moments after the explanation, when confidence
+> runs inflated, so they are scored but left out. Read the result as signed bias (mean P minus
+> accuracy), per subject and per item type, never as a pooled number. — PROTOCOL rule 10
+
 > **Four anchors, not ten bands.** This stream uses four fixed probabilities — 0.30 / 0.50 / 0.70 /
 > 0.90 — because the quiz interface admits at most four options per question. The consequence is a
 > four-bucket calibration curve rather than a ten-bucket one.
@@ -31,5 +36,5 @@ end, not one at a time.
 > scale as free-form forecasting, where a wrong 0.9 scores 0.81 and nothing stops you scoring near
 > zero. Do not pool this log with any free-form forecasting log you keep.
 
-| Date | Subject | Session | Item | P | Outcome | Score |
-|---|---|---|---|---|---|---|
+| Date | Subject | Session | Item | Kind | P | Outcome | Score |
+|---|---|---|---|---|---|---|---|

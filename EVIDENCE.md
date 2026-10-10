@@ -3,8 +3,8 @@
 Every rule in [`PROTOCOL.md`](skills/teach/PROTOCOL.md) traces to one of the claims below. When a rule
 feels wrong in the moment, this file is where to argue with it.
 
-**What these are.** Summaries extracted from a set of deep-research passes run on 2026-07-07 and
-2026-08-17, each carrying its sources and a confidence level. They are *not* a systematic review, and
+**What these are.** Summaries extracted from a set of deep-research passes run on 2026-07-07,
+2026-08-17 and 2026-10-10, each carrying its sources and a confidence level. They are *not* a systematic review, and
 several are explicitly `medium` confidence — read the confidence field before treating a claim as
 settled. Where a finding is contested in the literature, the note says so rather than picking a side.
 
@@ -218,6 +218,123 @@ trivia. Expert calibration is tied to homogeneous repetitive tasks with prompt r
 analysis* — feedback alone is insufficient (see `ctd_brier_feedback_alone_insufficient`). Practical
 consequence for the log: keep the `Subject` column and read calibration per subject. A single pooled
 number across mathematics, biology and prose would hide exactly the variation worth seeing.
+
+### ctd_forecast_metamemory_calibration_distinct
+
+**Backs:** rule 10 — quiz calibration is its own number, never pooled with forecasting
+
+**Assertion:** Calibration on one's own memory (judgments of learning, quiz confidence) and calibration
+on world-event forecasts are correlated-but-distinct skills. Mean confidence level (bias) partly carries
+across domains; discrimination (resolution) does not, and no study has measured forecasting calibration
+and memory-judgment accuracy in the same people.
+
+**Source:** Kelemen, Frost & Weaver 2000, *Memory & Cognition* (N = 66 and 78; confidence level
+test–retest .38–.69, only 2/24 and 3/24 cross-task resolution correlations significant); Mazancieux,
+Fleming, Souchay & Moulin 2020 (N = 181; episodic memory the most distinct domain); Seow, Fleming &
+Hauser 2025, *PLOS Mental Health* (N = 327; bias robustly correlated across domains, metacognitive
+efficiency ρ = 0.11)
+
+**Confidence:** high &nbsp;·&nbsp; **Verified:** 2026-10-10
+
+**Notes:** High for the *don't-pool* decision; the correlated-but-distinct reading underneath it is
+medium-high. Forecasting-practice transfer to memory judgments is unstudied. The scales also differ: a
+binary-outcome Brier carries an irreducible uncertainty term (p = .7 scores .21 even when perfectly
+calibrated), so a pooled mean would mostly track the mix of question types. The only legitimate
+cross-stream comparison is the sign and size of each stream's own bias.
+
+### ctd_resolution_unstable_within_person
+
+**Backs:** rule 10 — bias is usable early, resolution is not
+
+**Assertion:** An individual's resolution — whether their confidence separates the items they know from
+the ones they don't — has near-zero one-week test–retest reliability, so one session's resolution says
+almost nothing about the person. Their average confidence level is far more stable.
+
+**Source:** Kelemen, Frost & Weaver 2000, *Memory & Cognition* (one-week test–retest of gamma: ease of
+learning .13, immediate JOL .01, delayed JOL .08, text comprehension .06, all nonsignificant; confidence
+level .38–.69)
+
+**Confidence:** medium &nbsp;·&nbsp; **Verified:** 2026-10-10
+
+**Notes:** One study, but the most directly person-level datapoint found. This is why the protocol acts
+on per-subject bias and schedules on outcomes rather than on stated confidence: using confidence to
+decide what to review needs good resolution, and good resolution can only be established by pooling
+many items across many sessions.
+
+### ctd_foresight_bias_answer_present
+
+**Backs:** rule 10 — which confidence ratings count toward calibration
+
+**Assertion:** Judging one's own learning while the answer is present inflates predicted recall
+relative to a later test where it is absent — by roughly 15–24 percentage points on material whose
+answer makes the question look easy — and the bias is repaired by test experience and by judging later
+with the answer hidden, much less by further study.
+
+**Source:** Koriat & Bjork 2005, *JEP: Learning, Memory, and Cognition* (backward-associated pairs:
+judgment 75.7% vs recall 60.3%); Koriat & Bjork 2006, *Memory & Cognition* (pairs related only when seen
+together: 67.2 vs 43.4; illusion gone by the fourth study–test cycle)
+
+**Confidence:** medium &nbsp;·&nbsp; **Verified:** 2026-10-10
+
+**Notes:** High for existence, medium for how much of the magnitude carries to technical
+question-and-answer material. Group means only. Applying it to the comprehension check that closes a
+teaching step — rated moments after the explanation — is this project's inference, not a tested result.
+
+### ctd_delayed_answer_absent_jol_accurate
+
+**Backs:** rule 10 — which confidence ratings count toward calibration
+
+**Assertion:** Judgments of learning made after a short delay with the answer absent are far more
+accurate than immediate ones, the delay needed is seconds to minutes rather than days, and the benefit
+depends on the answer being absent when the judgment is made.
+
+**Source:** Rhodes & Tauber 2011, *Psychological Bulletin* (meta-analysis, 112 effect sizes, 4,554
+participants: delay raised accuracy by g ≈ 0.93); Dunlosky & Nelson 1992, *Memory & Cognition* (answer
+absent: all 45 participants showed the effect; answer present: little or none); Nelson & Dunlosky 1991,
+*Psychological Science* (gamma .38 immediate vs .90 delayed — figures verified secondhand only)
+
+**Confidence:** high &nbsp;·&nbsp; **Verified:** 2026-10-10
+
+**Notes:** High for existence and direction, medium for magnitude. Leading account: a delayed,
+answer-absent judgment rests on the outcome of a covert retrieval attempt, which predicts the test far
+better than the ease of having just read something. One caution for anyone reading a Brier score: Van
+Overschelde & Nelson 2006 found delay improved resolution while worsening mean calibration, so a real
+improvement can move the blended number the wrong way.
+
+### ctd_underconfidence_with_practice
+
+**Backs:** rule 10 — late-subject underconfidence is not corrected
+
+**Assertion:** Across repeated study–test cycles, judgments of learning shift from overconfidence to
+underconfidence while resolution improves, driven largely by memory of past test performance.
+
+**Source:** Koriat, Sheffer & Ma'ayan 2002, *JEP: General*; Koriat & Bjork 2006, *Memory & Cognition*
+(cycle 1 judgment 38.3 vs recall 27.7; cycle 4 judgment 78.7 vs recall 93.1); Finn & Metcalfe 2007, 2008
+(memory-for-past-test heuristic)
+
+**Confidence:** high &nbsp;·&nbsp; **Verified:** 2026-10-10
+
+**Notes:** High for existence; boundary conditions exist (Scheck & Nelson 2005). Operational consequence:
+underconfidence that appears once a subject has been reviewed several times is expected, often comes
+with better resolution, and is not a monitoring failure to coach out of the learner.
+
+### ctd_jol_reactivity_material_dependent
+
+**Backs:** the quiz item format — a confidence rating on every item
+
+**Assertion:** Making a judgment of learning changes memory for some materials (related word pairs
+g ≈ 0.32, word lists g ≈ 0.38) but not others (unrelated pairs ≈ 0), and has minimal effect on
+education-related material.
+
+**Source:** Double, Birney & Walker 2018, *Memory* (meta-analysis; overall g = 0.054, nonsignificant);
+Zhao et al. 2023, *Journal of Intelligence* (minimal reactivity on educational material after retrieval
+practice)
+
+**Confidence:** medium &nbsp;·&nbsp; **Verified:** 2026-10-10
+
+**Notes:** Between-condition effects; no per-person distributions exist. The practical reading: asking
+for a probability on every item costs close to nothing in learning terms on the kind of material this
+tutor teaches, so the protocol asks for one every time.
 
 ---
 
